@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ item.title }}
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'todo_list/post-detail.css' %}">
+{% endblock %}
+
+{% block nav_bar %}
+    <header id='main-navigation'>
+        <h1><a href="{% url 'home-page' %}">Home Page</a></h1>
+        <nav>
+            <a href="{% url 'all-items' %}">All Todo Items</a>
+            <a href="{% url 'create-item' %}">Create Activity</a>
+        </nav>
+    </header>
+{% endblock  %}
+
+{% block content %}
+
+    <section id='summary'>
+        <h2>{{ item.title }}</h2>
+        <h4>Created at: {{ item.create_date }}</h4>
+        <h4>Deadline: {{ item.deadline }}</h4>
+
+        <div id='read-later'>
+            <form action="{% url 'delete-item' item.slug %}" method='POST'>
+                {% csrf_token %}
+                <input type="hidden" name="delete_todo" value={{ item.id }}>
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this Activity?')">Delete this Activity</button>
+            </form>
+        </div>
+
+        <article>
+            <address>
+                <h3>Operator: {{ item.created_by }}</h3>
+            </address>
+        </article>
+    </section>
+
+    <main>
+        <h2>Item Description:</h2>
+        <p>
+            {{ item.description|linebreaks }}
+        </p>
+    </main>
+
+{% endblock %}

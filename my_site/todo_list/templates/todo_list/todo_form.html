@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Activity
+{% endblock %}
+
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'todo_list/form-styles.css' %}">
+{% endblock %}
+
+
+{% block nav_bar %}
+    <header id='main-navigation'>
+        <h1><a href="{% url 'home-page' %}">Home Page</a></h1>
+    </header>
+{% endblock  %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form  %}
+        {% comment %} Add an 'error' class only when there are errors in form {% endcomment %}
+            <div class='form-control {% if field.errors %}errors{% endif %}'> 
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button>Submit</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    All Activities
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'todo_list/post.css' %}">
+    <link rel="stylesheet" href="{% static 'todo_list/all-posts.css' %}">
+{% endblock %}
+
+
+{% block nav_bar %}
+    <header id='main-navigation'>
+        <h1><a href="{% url 'home-page' %}">Home Page</a></h1>
+        <nav>
+            <a href="{% url 'all-items' %}">All Todo Items</a>
+            <a href="{% url 'create-item' %}">Create Activity</a>
+        </nav>
+    </header>
+{% endblock  %}
+
+
+{% block content %}
+    {% if messages %}
+        <div class="messages-container">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <section id='all-posts'>
+        <h2>My Complete ToDo List</h2>
+        <ul>
+            {% for item in todo %}
+                {% include 'todo_list/includes/item.html' %}
+            {% endfor %}
+        </ul>
+    </section>
+
+    <script>
+        // Set the time (in milliseconds) after which the message should disappear
+        var delay = 5000; // 5 seconds
+    
+        // Get the message container element by its class
+        var message = document.querySelector('.messages-container');
+    
+        // If the message container element exists, set a timer to hide it after the delay
+        if (message) {
+            setTimeout(function() {
+                message.style.display = 'none';
+            }, delay);
+        }
+    </script>
+    
+
+{% endblock %}

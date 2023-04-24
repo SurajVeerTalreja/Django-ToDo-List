@@ -1,0 +1,16 @@
+{% load static %}
+
+<li>
+    <article class='post'>
+        <a href="{% url 'item-detail' item.slug %}">
+            <div class='post__content'>
+                <h3>ToDo: {{ item.title }}</h3>
+                <h4>Operator: {{ item.created_by }}</h3>
+                <p>Created at: {{ item.create_date }}</p>
+                <p>Deadline: {{ item.deadline }}</p>
+                <p>Description: {{ item.description }}</p>
+            </div>
+        </a>
+    </article>
+
+</li>
